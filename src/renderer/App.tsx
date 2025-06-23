@@ -76,10 +76,16 @@ function App() {
     else if (phase === 'Long Break') setActiveTab('longBreak');
   };
 
-  const handleOpenSettingsModal = () => setIsSettingsModalOpen(true);
+  const handleOpenSettingsModal = () => {
+    setIsSettingsModalOpen(true);
+    setIsStatisticsModalOpen(false);
+  };
   const handleCloseSettingsModal = () => setIsSettingsModalOpen(false);
 
-  const handleOpenStatisticsModal = () => setIsStatisticsModalOpen(true);
+  const handleOpenStatisticsModal = () => {
+    setIsStatisticsModalOpen(true);
+    setIsSettingsModalOpen(false);
+  };
   const handleCloseStatisticsModal = () => setIsStatisticsModalOpen(false);
 
   // Callback to update settings from the SettingsModalContent
