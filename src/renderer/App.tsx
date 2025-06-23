@@ -77,14 +77,22 @@ function App() {
   };
 
   const handleOpenSettingsModal = () => {
-    setIsSettingsModalOpen(true);
-    setIsStatisticsModalOpen(false);
+    if (isSettingsModalOpen) {
+      setIsSettingsModalOpen(false);
+    } else {
+      setIsSettingsModalOpen(true);
+      setIsStatisticsModalOpen(false);
+    }
   };
   const handleCloseSettingsModal = () => setIsSettingsModalOpen(false);
 
   const handleOpenStatisticsModal = () => {
-    setIsStatisticsModalOpen(true);
-    setIsSettingsModalOpen(false);
+    if (isStatisticsModalOpen) {
+      setIsStatisticsModalOpen(false);
+    } else {
+      setIsStatisticsModalOpen(true);
+      setIsSettingsModalOpen(false);
+    }
   };
   const handleCloseStatisticsModal = () => setIsStatisticsModalOpen(false);
 
