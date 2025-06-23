@@ -41,6 +41,31 @@ npm run build
 ```
 The output will be in the `build/` directory (or as configured by your build tool).
 
+## macOS Executable Build & Installation
+
+### Building the App
+
+```sh
+npm install
+npm run build
+npm run dist
+```
+
+The built `.dmg` or `.app` file will be in the `dist/` or `release/` directory.
+
+### Installing
+
+1. Open the `.dmg` file.
+2. Drag the `Pomodoro.app` to your Applications folder.
+3. Eject the installer.
+
+### Running
+
+- Open `Pomodoro` from Applications or Launchpad.
+
+### Environment Variables
+If your app requires any environment variables (e.g., API keys), create a `.env` file in the root of your project **before building**. For most Pomodoro apps, this is not needed unless you have external integrations.
+
 ## Architecture Decisions
 - **React with TypeScript:** For type safety and maintainability.
 - **Component-based structure:** Each UI element (timer, task list, modals) is a separate, reusable component.
