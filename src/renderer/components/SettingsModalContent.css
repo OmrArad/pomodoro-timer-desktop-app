@@ -34,4 +34,26 @@
 .save-settings-button:hover, .save-settings-button:focus {
   filter: brightness(1.08);
   box-shadow: 0 2px 8px rgba(56, 137, 244, 0.13);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 2.1rem;
+  color: #b0b7c3;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0 8px;
+  line-height: 1;
+  border-radius: 50%;
+  transition: background 0.18s, color 0.18s;
+}
+
+.modal-close-btn:hover, .modal-close-btn:focus {
+  background: #e7ecf4;
+  color: #3889f4;
+  outline: none;
 } 

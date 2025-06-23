@@ -28,11 +28,13 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <button onClick={onClose} className="modal-close-button">&times;</button>
-      <SettingsModalContent
-        currentSettings={currentSettings}
-        onSave={onSave}
-      />
+      <div style={{ position: 'relative' }}>
+        <button onClick={onClose} className="modal-close-btn" aria-label="Close settings">&times;</button>
+        <SettingsModalContent
+          currentSettings={currentSettings}
+          onSave={onSave}
+        />
+      </div>
     </Modal>
   );
 };

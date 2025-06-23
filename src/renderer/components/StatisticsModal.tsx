@@ -29,12 +29,14 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <button onClick={onClose} className="modal-close-button">&times;</button>
-      <StatisticsModalContent
-        pomodoroCount={pomodoroCount}
-        completedTasksCount={completedTasksCount}
-        totalTasksCount={totalTasksCount}
-      />
+      <div style={{ position: 'relative' }}>
+        <button onClick={onClose} className="modal-close-btn" aria-label="Close statistics">&times;</button>
+        <StatisticsModalContent
+          pomodoroCount={pomodoroCount}
+          completedTasksCount={completedTasksCount}
+          totalTasksCount={totalTasksCount}
+        />
+      </div>
     </Modal>
   );
 };
