@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TimerSection from './TimerSection';
 import { UserSettings } from '../types';
 
@@ -25,10 +25,12 @@ const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodor
   };
 
   const [secondsLeft, setSecondsLeft] = useState(getCurrentPhaseDuration());
+  const hasFiredRef = useRef(false);
 
   // Reset timer when activeTab or userSettings change
   useEffect(() => {
     setSecondsLeft(getCurrentPhaseDuration());
+    hasFiredRef.current = false; // Reset the flag when timer resets
   }, [activeTab, userSettings]);
 
   // Timer countdown effect
@@ -42,7 +44,8 @@ const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodor
 
   // Handle timer end
   useEffect(() => {
-    if (secondsLeft === 0) {
+    if (secondsLeft === 0 && !hasFiredRef.current) {
+      hasFiredRef.current = true;
       if (activeTab === 'pomodoro' && onPomodoroComplete) {
         onPomodoroComplete();
       }
