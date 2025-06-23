@@ -111,16 +111,17 @@ const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodor
         progressPercentage={progressPercentage}
         currentPhase={currentPhase}
         handleSessionTypeChange={handleSessionTypeChange}
-      />
-      {shouldShowControls && (
-        <TimerControls
-          isRunning={isRunning}
-          startTimer={startTimer}
-          pauseTimer={pauseTimer}
-          resetTimer={resetTimer}
-          skipPhase={skipPhase}
-        />
-      )}
+      >
+        {shouldShowControls && (
+          <TimerControls
+            isRunning={isRunning}
+            startTimer={startTimer}
+            pauseTimer={pauseTimer}
+            resetTimer={resetTimer}
+            skipPhase={skipPhase}
+          />
+        )}
+      </TimerSection>
     </div>
   );
 };

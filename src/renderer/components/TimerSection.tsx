@@ -10,6 +10,7 @@ interface TimerSectionProps {
     progressPercentage: number;
     currentPhase: string;
     handleSessionTypeChange: (phase: 'Work' | 'Short Break' | 'Long Break') => void;
+    children?: React.ReactNode;
 }
 
 const TimerSection: React.FC<TimerSectionProps> = ({
@@ -18,12 +19,14 @@ const TimerSection: React.FC<TimerSectionProps> = ({
     progressPercentage,
     currentPhase,
     handleSessionTypeChange,
+    children,
 }) => {
     return (
         <div className="timer-section">
             <TimerDisplay minutes={minutesDisplay} seconds={secondsDisplay} />
             <ProgressBar progressPercentage={progressPercentage} currentPhase={currentPhase} />
             <SessionTypeSelector currentPhase={currentPhase} onSessionTypeChange={handleSessionTypeChange} />
+            {children}
         </div>
     );
 };

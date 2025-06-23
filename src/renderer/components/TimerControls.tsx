@@ -1,4 +1,5 @@
 import React from 'react';
+import './TimerControls.css';
 
 interface TimerControlsProps {
     isRunning: boolean;
@@ -16,27 +17,25 @@ const TimerControls: React.FC<TimerControlsProps> = ({
     skipPhase,
 }) => {
     return (
-        <div className="flex justify-center">
-            <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 max-w-[480px] justify-center">
+        <div className="timer-controls">
+            <div className="timer-controls-inner">
                 <button
                     onClick={isRunning ? pauseTimer : startTimer}
-                    className={`flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 ${
-                        isRunning ? 'bg-orange-500 hover:bg-orange-600' : 'bg-[#3889f4] hover:bg-blue-500'
-                    } text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] grow`}
+                    className={`timer-btn ${isRunning ? 'pause' : 'start'}`}
                 >
-                    <span className="truncate">{isRunning ? 'Pause' : 'Start'}</span>
+                    <span>{isRunning ? 'Pause' : 'Start'}</span>
                 </button>
                 <button
                     onClick={resetTimer}
-                    className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#e7ecf4] text-[#0d131c] text-sm font-bold leading-normal tracking-[0.015em] grow"
+                    className="timer-btn reset"
                 >
-                    <span className="truncate">Reset</span>
+                    <span>Reset</span>
                 </button>
                 <button
                     onClick={skipPhase}
-                    className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#e7ecf4] text-[#0d131c] text-sm font-bold leading-normal tracking-[0.015em] grow"
+                    className="timer-btn skip"
                 >
-                    <span className="truncate">Skip</span>
+                    <span>Skip</span>
                 </button>
             </div>
         </div>
