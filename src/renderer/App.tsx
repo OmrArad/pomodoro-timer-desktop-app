@@ -87,6 +87,20 @@ function App() {
     setUserSettings(newSettings);
   }, []);
 
+  // Load tasks from localStorage on mount
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  // Persist tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Error handling for empty task input
   const handleAddTask = useCallback(() => {
     if (!newTaskName.trim()) {
       setTaskInputError('Task name cannot be empty.');
@@ -165,10 +179,6 @@ function App() {
       setActiveTab('pomodoro');
     }
   }, [activeTab, handlePomodoroComplete, userSettings.autoStartPomodoros]);
-
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
 
   return (
     <div className="App">
