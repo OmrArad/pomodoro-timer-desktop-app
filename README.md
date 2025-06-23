@@ -56,5 +56,9 @@ The output will be in the `build/` directory (or as configured by your build too
 - **Limited mobile optimization:** While responsive, some UI elements may need further polish for small screens.
 - **No notifications:** The app does not provide desktop or push notifications for session changes.
 
+## Documentation
+- [API Documentation](./API.md)
+- [Development Journal](./JOURNAL.md)
+
 ---
 MIT License
