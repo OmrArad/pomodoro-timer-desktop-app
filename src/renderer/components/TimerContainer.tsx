@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TimerSection from './TimerSection';
+import TimerControls from './TimerControls';
 import { UserSettings } from '../types';
 
 interface TimerContainerProps {
@@ -7,8 +8,15 @@ interface TimerContainerProps {
   onPomodoroComplete?: () => void;
 }
 
+const getInitialIsRunning = (activeTab: 'pomodoro' | 'shortBreak' | 'longBreak', userSettings: UserSettings) => {
+  if (activeTab === 'pomodoro') return userSettings.autoStartPomodoros;
+  if (activeTab === 'shortBreak' || activeTab === 'longBreak') return userSettings.autoStartBreaks;
+  return false;
+};
+
 const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodoroComplete }) => {
   const [activeTab, setActiveTab] = useState<'pomodoro' | 'shortBreak' | 'longBreak'>('pomodoro');
+  const [isRunning, setIsRunning] = useState(() => getInitialIsRunning('pomodoro', userSettings));
 
   // Timer logic
   const getCurrentPhaseDuration = () => {
@@ -31,27 +39,44 @@ const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodor
   useEffect(() => {
     setSecondsLeft(getCurrentPhaseDuration());
     hasFiredRef.current = false; // Reset the flag when timer resets
+    // Set running state based on auto-start settings
+    setIsRunning(getInitialIsRunning(activeTab, userSettings));
   }, [activeTab, userSettings]);
 
   // Timer countdown effect
   useEffect(() => {
-    if (secondsLeft <= 0) return;
+    if (!isRunning || secondsLeft <= 0) return;
     const interval = setInterval(() => {
       setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
     return () => clearInterval(interval);
-  }, [secondsLeft]);
+  }, [isRunning, secondsLeft]);
 
   // Handle timer end
   useEffect(() => {
     if (secondsLeft === 0 && !hasFiredRef.current) {
       hasFiredRef.current = true;
+      setIsRunning(false); // Stop timer at end
       if (activeTab === 'pomodoro' && onPomodoroComplete) {
         onPomodoroComplete();
       }
       // Auto-switch logic can be added here if needed
     }
   }, [secondsLeft, activeTab, onPomodoroComplete]);
+
+  // Timer control handlers
+  const startTimer = () => setIsRunning(true);
+  const pauseTimer = () => setIsRunning(false);
+  const resetTimer = () => {
+    setSecondsLeft(getCurrentPhaseDuration());
+    hasFiredRef.current = false;
+    setIsRunning(false);
+  };
+  const skipPhase = () => {
+    if (activeTab === 'pomodoro') setActiveTab('shortBreak');
+    else if (activeTab === 'shortBreak') setActiveTab('longBreak');
+    else setActiveTab('pomodoro');
+  };
 
   // Format minutes and seconds for display
   const minutesDisplay = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
@@ -75,14 +100,28 @@ const TimerContainer: React.FC<TimerContainerProps> = ({ userSettings, onPomodor
     else if (phase === 'Long Break') setActiveTab('longBreak');
   };
 
+  const shouldShowControls = !((activeTab === 'pomodoro' && userSettings.autoStartPomodoros) ||
+    ((activeTab === 'shortBreak' || activeTab === 'longBreak') && userSettings.autoStartBreaks));
+
   return (
-    <TimerSection
-      minutesDisplay={minutesDisplay}
-      secondsDisplay={secondsDisplay}
-      progressPercentage={progressPercentage}
-      currentPhase={currentPhase}
-      handleSessionTypeChange={handleSessionTypeChange}
-    />
+    <div>
+      <TimerSection
+        minutesDisplay={minutesDisplay}
+        secondsDisplay={secondsDisplay}
+        progressPercentage={progressPercentage}
+        currentPhase={currentPhase}
+        handleSessionTypeChange={handleSessionTypeChange}
+      />
+      {shouldShowControls && (
+        <TimerControls
+          isRunning={isRunning}
+          startTimer={startTimer}
+          pauseTimer={pauseTimer}
+          resetTimer={resetTimer}
+          skipPhase={skipPhase}
+        />
+      )}
+    </div>
   );
 };
 
