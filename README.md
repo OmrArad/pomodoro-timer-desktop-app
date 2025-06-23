@@ -3,6 +3,8 @@
 ## Application Description
 A modern Pomodoro timer and task manager built with React and TypeScript. The app allows users to manage tasks, track Pomodoro sessions, and view statistics, all within a clean and responsive interface. Data is persisted locally for a seamless user experience.
 
+> **API documentation for main modules/components is available in [API.md](./API.md).**
+
 ## Development Process & Tools
 
 - **AI Pair Programming:** This project was developed with the assistance of [Cursor](https://www.cursor.so/) (an AI coding assistant powered by ChatGPT), which helped with code generation, refactoring, code review, and best practices throughout the development process.
