@@ -1,13 +1,16 @@
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import App from './App';
+import Modal from 'react-modal';
+import './index.css'; // Your main CSS file, where Tailwind is imported
 
-const container = document.getElementById('root') as HTMLElement;
-const root = createRoot(container);
-root.render(<App />);
+if (process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#root');
+}
 
-// calling IPC exposed from preload script
-window.electron?.ipcRenderer.once('ipc-example', (arg) => {
-  // eslint-disable-next-line no-console
-  console.log(arg);
-});
-window.electron?.ipcRenderer.sendMessage('ipc-example', ['ping']);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
