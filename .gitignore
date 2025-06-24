@@ -1,3 +1,4 @@
 node_modules
-release
+release/app/dist
+release/build
 .DS_Store
